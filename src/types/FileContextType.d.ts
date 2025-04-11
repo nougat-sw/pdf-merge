@@ -2,7 +2,13 @@ import type { FileWithHash } from "./FileWithHash.d";
 
 type FileContextType = {
     files: Array<FileWithHash>;
-    addFile: (file: File) => void;
+    addFiles: (file: Array<File>) => void;
+    deleteSelected: () => void;
+    deleteAll: () => void;
+    toggleIsSelected: (hash: string) => void;
+    selectAll: () => void;
+    deselectAll: () => void;
+    deleteByHash: (hash: string) => void;
 };
 
 export { FileContextType };

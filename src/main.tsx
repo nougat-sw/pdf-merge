@@ -11,3 +11,10 @@ createRoot(document.getElementById("root")!).render(
         </FileContextProvider>
     </StrictMode>,
 );
+
+/*
+todo:
+- pdf preview on the side
+- modal of rejected files
+- allow duplicates
+*/

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { FileContext } from "../Contexts/FileContext";
 
 export default function TableOperations({ openFileDialog }: { openFileDialog: () => void }) {
-    const { deleteSelected, deleteAll } = useContext(FileContext);
+    const { deleteSelected, deleteAll, files } = useContext(FileContext);
 
     return (
         <div className="flex justify-between gap-2">
@@ -15,7 +15,8 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
                 </button>
                 <button
                     onClick={deleteSelected}
-                    className="cursor-pointer rounded-md border border-gray-700 bg-white px-3 ring-gray-700 ring-offset-2 ring-offset-white focus:ring-2 focus:outline-none"
+                    disabled={!files.some((file) => file.isSelected)}
+                    className="cursor-pointer rounded-md border border-gray-700 bg-white px-3 ring-gray-700 ring-offset-2 ring-offset-white focus:ring-2 focus:outline-none disabled:cursor-default disabled:bg-gray-200"
                 >
                     Delete
                 </button>

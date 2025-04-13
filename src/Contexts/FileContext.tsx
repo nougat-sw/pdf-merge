@@ -4,18 +4,7 @@ import { createContext, useState } from "react";
 import getFileHash from "../lib/hashFile.ts";
 import { PDFDocument } from "pdf-lib";
 
-const defaultContext: FileContextType = {
-    files: [],
-    addFiles: () => {},
-    deleteSelected: () => {},
-    deleteAll: () => {},
-    toggleIsSelected: () => {},
-    selectAll: () => {},
-    deselectAll: () => {},
-    deleteByHash: () => {},
-};
-
-const FileContext = createContext<FileContextType>(defaultContext);
+const FileContext = createContext<FileContextType | null>(null);
 
 export default function FileContextProvider({ children }: { children: React.ReactNode }) {
     const [files, setFiles] = useState<Array<AppFile>>([]);
@@ -26,8 +15,6 @@ export default function FileContextProvider({ children }: { children: React.Reac
         for (const file of files) {
             const hash = await getFileHash(file);
 
-            const nbOfPages = (await PDFDocument.load(await file.arrayBuffer())).getPageCount();
-
             if (filesToAdd.some((item) => item.hash === hash)) {
                 continue;
             }
@@ -36,7 +23,6 @@ export default function FileContextProvider({ children }: { children: React.Reac
                 file,
                 hash,
                 isSelected: false,
-                nbOfPages,
             });
         }
 
@@ -80,6 +66,10 @@ export default function FileContextProvider({ children }: { children: React.Reac
         );
     }
 
+    async function getNbOfPages(file: File) {
+        return (await PDFDocument.load(await file.arrayBuffer())).getPageCount();
+    }
+
     return (
         <FileContext.Provider
             value={{
@@ -91,6 +81,7 @@ export default function FileContextProvider({ children }: { children: React.Reac
                 selectAll,
                 deselectAll,
                 deleteByHash,
+                getNbOfPages,
             }}
         >
             {children}

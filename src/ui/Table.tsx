@@ -1,11 +1,11 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
-import { FileContext } from "../contexts/FileContext";
 import TableOperations from "./TableOperations";
 import TableRow from "./TableRow";
+import useFiles from "../hooks/useFiles";
 
 export default function Table() {
-    const { addFiles, files, selectAll, deselectAll } = useContext(FileContext);
+    const { addFiles, files, selectAll, deselectAll } = useFiles();
 
     const onDrop = useCallback(
         function (files: Array<File>) {

@@ -9,6 +9,7 @@ type FileContextType = {
     selectAll: () => void;
     deselectAll: () => void;
     deleteByHash: (hash: string) => void;
+    getNbOfPages: (file: File) => Promise<number>;
 };
 
 export { FileContextType };

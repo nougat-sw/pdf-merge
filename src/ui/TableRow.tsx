@@ -1,12 +1,31 @@
 import { filesize } from "filesize";
 import { FaTrash } from "react-icons/fa";
 import { truncateEnd } from "../lib/truncate";
-import { useContext } from "react";
-import { FileContext } from "../contexts/FileContext";
+import { useEffect, useState } from "react";
 import type { AppFile } from "../types/AppFile";
+import useFiles from "../hooks/useFiles";
 
 export default function TableRow({ file }: { file: AppFile }) {
-    const { deleteByHash, toggleIsSelected } = useContext(FileContext);
+    const [nbOfPages, setNbOfPages] = useState<number>(0);
+
+    const { deleteByHash, toggleIsSelected, getNbOfPages } = useFiles();
+
+    const name = truncateEnd(file.file.name.split(".pdf")[0], 60) + ".pdf";
+    const size = filesize(file.file.size);
+    const hash = file.hash;
+
+    useEffect(
+        function () {
+            getNbOfPages(file.file).then((num) => {
+                setNbOfPages(num);
+            });
+        },
+        [file.file, getNbOfPages],
+    );
+
+    function handleDelete() {
+        deleteByHash(file.hash);
+    }
 
     return (
         <tr key={file.hash} className="divide-x divide-gray-300 odd:bg-gray-100">
@@ -18,12 +37,12 @@ export default function TableRow({ file }: { file: AppFile }) {
                     onChange={() => toggleIsSelected(file.hash)}
                 />
             </td>
-            <td className="px-1">{truncateEnd(file.file.name.split(".pdf")[0], 60) + ".pdf"}</td>
-            <td className="px-1 text-center">{file.nbOfPages}</td>
-            <td className="px-1 text-center">{filesize(file.file.size)}</td>
-            <td className="px-1 text-center font-mono">{file.hash}</td>
+            <td className="px-1">{name}</td>
+            <td className="px-1 text-center">{nbOfPages}</td>
+            <td className="px-1 text-center">{size}</td>
+            <td className="px-1 text-center font-mono">{hash}</td>
             <td className="px-1 text-center">
-                <button className="cursor-pointer text-red-400" onClick={() => deleteByHash(file.hash)}>
+                <button className="cursor-pointer text-red-400" onClick={handleDelete}>
                     <FaTrash />
                 </button>
             </td>

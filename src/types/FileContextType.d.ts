@@ -1,7 +1,7 @@
-import type { FileWithHash } from "./FileWithHash.d";
+import type { AppFile } from "./AppFile.d";
 
 type FileContextType = {
-    files: Array<FileWithHash>;
+    files: Array<AppFile>;
     addFiles: (file: Array<File>) => void;
     deleteSelected: () => void;
     deleteAll: () => void;

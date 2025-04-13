@@ -1,7 +1,8 @@
-import { createContext, useState } from "react";
 import type { FileContextType } from "../types/FileContextType";
-import type { FileWithHash } from "../types/FileWithHash";
+import type { AppFile } from "../types/AppFile";
+import { createContext, useState } from "react";
 import getFileHash from "../lib/hashFile.ts";
+import { PDFDocument } from "pdf-lib";
 
 const defaultContext: FileContextType = {
     files: [],
@@ -17,26 +18,29 @@ const defaultContext: FileContextType = {
 const FileContext = createContext<FileContextType>(defaultContext);
 
 export default function FileContextProvider({ children }: { children: React.ReactNode }) {
-    const [files, setFiles] = useState<Array<FileWithHash>>([]);
+    const [files, setFiles] = useState<Array<AppFile>>([]);
 
     async function addFiles(files: Array<File>) {
-        const hashedFiles: FileWithHash[] = [];
+        const filesToAdd: AppFile[] = [];
 
         for (const file of files) {
             const hash = await getFileHash(file);
 
-            if (hashedFiles.some((item) => item.hash === hash)) {
+            const nbOfPages = (await PDFDocument.load(await file.arrayBuffer())).getPageCount();
+
+            if (filesToAdd.some((item) => item.hash === hash)) {
                 continue;
             }
 
-            hashedFiles.push({
+            filesToAdd.push({
                 file,
                 hash,
                 isSelected: false,
+                nbOfPages,
             });
         }
 
-        setFiles((files) => [...files, ...hashedFiles]);
+        setFiles((files) => [...files, ...filesToAdd]);
     }
 
     function deleteAll() {

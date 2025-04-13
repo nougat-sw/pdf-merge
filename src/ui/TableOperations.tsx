@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { FileContext } from "../Contexts/FileContext";
+import { FileContext } from "../contexts/FileContext";
 
 export default function TableOperations({ openFileDialog }: { openFileDialog: () => void }) {
     const { deleteSelected, deleteAll, files } = useContext(FileContext);

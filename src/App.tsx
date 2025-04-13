@@ -1,4 +1,4 @@
-import Table from "./components/Table";
+import Table from "./ui/Table";
 
 export default function App() {
     return (

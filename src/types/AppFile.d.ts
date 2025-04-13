@@ -1,7 +1,8 @@
-type FileWithHash = {
+type AppFile = {
     file: File;
     hash: string;
     isSelected: boolean;
+    nbOfPages: number;
 };
 
-export { FileWithHash };
+export { AppFile };

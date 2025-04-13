@@ -1,13 +1,11 @@
 import { useCallback, useContext } from "react";
 import { useDropzone } from "react-dropzone";
-import { FileContext } from "../Contexts/FileContext";
+import { FileContext } from "../contexts/FileContext";
 import TableOperations from "./TableOperations";
-import { filesize } from "filesize";
-import { truncateEnd } from "../lib/truncate";
-import { FaTrash } from "react-icons/fa";
+import TableRow from "./TableRow";
 
 export default function Table() {
-    const { addFiles, files, toggleIsSelected, selectAll, deselectAll, deleteByHash } = useContext(FileContext);
+    const { addFiles, files, selectAll, deselectAll } = useContext(FileContext);
 
     const onDrop = useCallback(
         function (files: Array<File>) {
@@ -35,27 +33,7 @@ export default function Table() {
         }
     }
 
-    const tableContent = files.map((file) => (
-        <tr key={file.hash} className="divide-x divide-gray-300 odd:bg-gray-100">
-            <td className="px-1 text-center">
-                <input
-                    type="checkbox"
-                    className="accent-white"
-                    checked={file.isSelected}
-                    onChange={() => toggleIsSelected(file.hash)}
-                />
-            </td>
-            <td className="px-1">{truncateEnd(file.file.name.split(".pdf")[0], 60) + ".pdf"}</td>
-            <td className="px-1 text-center">-</td>
-            <td className="px-1 text-center">{filesize(file.file.size)}</td>
-            <td className="px-1 text-center font-mono">{file.hash}</td>
-            <td className="px-1 text-center">
-                <button className="cursor-pointer text-red-400" onClick={() => deleteByHash(file.hash)}>
-                    <FaTrash />
-                </button>
-            </td>
-        </tr>
-    ));
+    const tableContent = files.map((file) => <TableRow key={file.hash} file={file} />);
 
     const prompt = (
         <div className="text-center">

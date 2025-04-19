@@ -1,7 +1,7 @@
-import type { AppFile } from "./AppFile.d";
+import type { UIFile } from "./UIFile.d";
 
 type FileContextType = {
-    files: Array<AppFile>;
+    files: Array<UIFile>;
     addFiles: (file: Array<File>) => void;
     deleteSelected: () => void;
     deleteAll: () => void;

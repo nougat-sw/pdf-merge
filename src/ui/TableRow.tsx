@@ -27,7 +27,7 @@ export default function TableRow({ file }: { file: UIFile }) {
     }
 
     return (
-        <tr key={file.id} className="divide-x divide-gray-300 odd:bg-gray-100">
+        <tr key={file.id} className="divide-x divide-gray-300 border-b border-gray-300 odd:bg-gray-100">
             <td className="px-1 text-center">
                 <input
                     type="checkbox"

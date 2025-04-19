@@ -73,7 +73,7 @@ export default function Table() {
                             <th className="px-1"></th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-300">{tableContent}</tbody>
+                    <tbody>{tableContent}</tbody>
                 </table>
                 {files.length === 0 && (
                     <div className="flex min-h-52 items-center justify-center p-2 text-xl">{prompt}</div>

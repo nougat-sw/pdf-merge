@@ -1,6 +1,6 @@
 type AppFile = {
+    id: string;
     file: File;
-    hash: string;
     isSelected: boolean;
 };
 

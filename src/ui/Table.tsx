@@ -33,7 +33,7 @@ export default function Table() {
         }
     }
 
-    const tableContent = files.map((file) => <TableRow key={file.hash} file={file} />);
+    const tableContent = files.map((file) => <TableRow key={file.id} file={file} />);
 
     const prompt = (
         <div className="text-center">
@@ -70,7 +70,6 @@ export default function Table() {
                             <th className="px-1">File Name</th>
                             <th className="px-1">Pages</th>
                             <th className="px-1">Size</th>
-                            <th className="px-1">Hash</th>
                             <th className="px-1"></th>
                         </tr>
                     </thead>

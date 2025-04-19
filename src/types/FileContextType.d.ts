@@ -8,7 +8,7 @@ type FileContextType = {
     toggleIsSelected: (hash: string) => void;
     selectAll: () => void;
     deselectAll: () => void;
-    deleteByHash: (hash: string) => void;
+    deleteById: (id: string) => void;
     getNbOfPages: (file: File) => Promise<number>;
 };
 

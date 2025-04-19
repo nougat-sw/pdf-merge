@@ -1,7 +1,7 @@
-type AppFile = {
+type UIFile = {
     id: string;
     file: File;
     isSelected: boolean;
 };
 
-export { AppFile };
+export { UIFile };

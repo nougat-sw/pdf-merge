@@ -1,5 +1,5 @@
 import type { FileContextType } from "../types/FileContextType";
-import type { AppFile } from "../types/AppFile";
+import type { UIFile } from "../types/UIFile";
 import { createContext, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import { nanoid } from "nanoid";
@@ -7,10 +7,10 @@ import { nanoid } from "nanoid";
 const FileContext = createContext<FileContextType | null>(null);
 
 export default function FileContextProvider({ children }: { children: React.ReactNode }) {
-    const [files, setFiles] = useState<Array<AppFile>>([]);
+    const [files, setFiles] = useState<Array<UIFile>>([]);
 
     function addFiles(files: Array<File>) {
-        const filesToAdd: AppFile[] = [];
+        const filesToAdd: UIFile[] = [];
 
         for (const file of files) {
             filesToAdd.push({

@@ -2,10 +2,10 @@ import { filesize } from "filesize";
 import { FaTrash } from "react-icons/fa";
 import { truncateEnd } from "../lib/truncate";
 import { useEffect, useState } from "react";
-import type { AppFile } from "../types/AppFile";
+import type { UIFile } from "../types/UIFile";
 import useFiles from "../hooks/useFiles";
 
-export default function TableRow({ file }: { file: AppFile }) {
+export default function TableRow({ file }: { file: UIFile }) {
     const [nbOfPages, setNbOfPages] = useState<number>(0);
 
     const { deleteById, toggleIsSelected, getNbOfPages } = useFiles();

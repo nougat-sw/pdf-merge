@@ -4,8 +4,12 @@ import { truncateEnd } from "../lib/truncate";
 import { useEffect, useState } from "react";
 import type { UIFile } from "../types/UIFile";
 import useFiles from "../hooks/useFiles";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 export default function TableRow({ file }: { file: UIFile }) {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: file.id });
+
     const [nbOfPages, setNbOfPages] = useState<number>(0);
 
     const { deleteById, toggleIsSelected, getNbOfPages } = useFiles();
@@ -22,12 +26,19 @@ export default function TableRow({ file }: { file: UIFile }) {
         [file.file, getNbOfPages],
     );
 
-    function handleDelete() {
-        deleteById(file.id);
-    }
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    };
 
     return (
-        <tr key={file.id} className="divide-x divide-gray-300 border-b border-gray-300 odd:bg-gray-100">
+        <tr
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+            {...listeners}
+            className="divide-x divide-gray-300 border-b border-gray-300 odd:bg-gray-100"
+        >
             <td className="px-1 text-center">
                 <input
                     type="checkbox"
@@ -40,7 +51,7 @@ export default function TableRow({ file }: { file: UIFile }) {
             <td className="px-1 text-center">{nbOfPages}</td>
             <td className="px-1 text-center">{size}</td>
             <td className="px-1 text-center">
-                <button className="cursor-pointer text-red-400" onClick={handleDelete}>
+                <button className="cursor-pointer text-red-400" onClick={() => deleteById(file.id)}>
                     <FaTrash />
                 </button>
             </td>

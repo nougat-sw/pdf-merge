@@ -69,6 +69,7 @@ export default function FileContextProvider({ children }: { children: React.Reac
             value={{
                 files,
                 addFiles,
+                setFiles,
                 deleteAll,
                 deleteSelected,
                 toggleIsSelected,

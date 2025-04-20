@@ -10,6 +10,7 @@ type FileContextType = {
     deselectAll: () => void;
     deleteById: (id: string) => void;
     getNbOfPages: (file: File) => Promise<number>;
+    setFiles: React.Dispatch<React.SetStateAction<UIFile[]>>;
 };
 
 export { FileContextType };

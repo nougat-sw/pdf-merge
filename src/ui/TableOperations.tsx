@@ -1,5 +1,6 @@
 import useFiles from "../hooks/useFiles";
 import merge from "../lib/merge";
+import download from "../lib/download.ts";
 import ConfirmDialog from "./ConfirmDialog";
 import { useState } from "react";
 
@@ -22,12 +23,8 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
             }),
         );
 
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = "merged.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        download(url);
+
         URL.revokeObjectURL(url);
     }
 
@@ -61,8 +58,6 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
         showDialog("Confirm deletion", "Delete all files?", confirm, () => setIsDialogOpen(false));
     }
 
-    console.log(onClose);
-
     return (
         <>
             <div className="flex justify-between gap-2">
@@ -76,20 +71,22 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
                     <button
                         onClick={handleDeleteSelected}
                         disabled={!files.some((file) => file.isSelected)}
-                        className="cursor-pointer rounded-md border border-gray-700 bg-white px-3 ring-gray-700 ring-offset-2 ring-offset-white focus:ring-2 focus:outline-none disabled:cursor-default disabled:bg-gray-200"
+                        className="cursor-pointer rounded-md border border-gray-700 bg-white px-3 ring-gray-700 ring-offset-2 ring-offset-white focus:ring-2 focus:outline-none disabled:cursor-default disabled:bg-gray-300"
                     >
                         Delete
                     </button>
                     <button
                         onClick={handleDeleteAll}
-                        className="cursor-pointer rounded-md border border-gray-700 bg-white px-3 ring-gray-700 ring-offset-2 ring-offset-white focus:ring-2 focus:outline-none"
+                        disabled={files.length === 0}
+                        className="cursor-pointer rounded-md border border-gray-700 bg-white px-3 ring-gray-700 ring-offset-2 ring-offset-white focus:ring-2 focus:outline-none disabled:cursor-default disabled:bg-gray-300"
                     >
                         Delete All
                     </button>
                 </div>
                 <button
+                    disabled={files.length < 2}
                     onClick={handleMerge}
-                    className="cursor-pointer rounded-md border border-gray-700 bg-gray-700 px-3 text-white ring-gray-700 ring-offset-2 ring-offset-gray-200 focus:ring-2 focus:outline-none active:ring"
+                    className="cursor-pointer rounded-md border border-gray-700 bg-gray-700 px-3 text-white ring-gray-700 ring-offset-2 ring-offset-gray-200 focus:ring-2 focus:outline-none active:ring disabled:cursor-default"
                 >
                     Merge
                 </button>

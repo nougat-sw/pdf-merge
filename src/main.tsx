@@ -2,19 +2,12 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
-import FileContextProvider from "./contexts/FileContext.tsx";
+import FileContext from "./contexts/FileContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <FileContextProvider>
+        <FileContext>
             <App />
-        </FileContextProvider>
+        </FileContext>
     </StrictMode>,
 );
-
-/*
-todo:
-- pdf preview on the side
-- modal of rejected files
-- allow duplicates
-*/

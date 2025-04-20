@@ -12,6 +12,8 @@ export default async function merge(files: Array<File>) {
         }
     }
 
+    merged.setTitle("merged");
+
     const mergedBytes = await merged.save();
 
     return mergedBytes;

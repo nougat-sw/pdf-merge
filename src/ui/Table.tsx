@@ -51,7 +51,7 @@ export default function Table() {
     );
 
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex h-full w-full max-w-3xl flex-col gap-2 p-2">
             <div {...getRootProps()} className="min-h-52 overflow-hidden rounded-md border border-gray-400 bg-white">
                 <input {...getInputProps()} />
                 <table className="w-full table-auto border-collapse overflow-scroll">

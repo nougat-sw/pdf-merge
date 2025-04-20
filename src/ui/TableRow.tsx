@@ -37,9 +37,9 @@ export default function TableRow({ file }: { file: UIFile }) {
             style={style}
             {...attributes}
             {...listeners}
-            className="divide-x divide-gray-300 border-b border-gray-300 odd:bg-gray-100"
+            className="divide-x divide-gray-300 border-b border-gray-300 select-none odd:bg-gray-100 active:cursor-grabbing"
         >
-            <td className="px-1 text-center">
+            <td className="w-12 px-1 text-center">
                 <input
                     type="checkbox"
                     className="accent-white"

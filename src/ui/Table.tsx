@@ -21,7 +21,11 @@ import {
 
 export default function Table() {
     const sensors = useSensors(
-        useSensor(PointerSensor),
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         }),
@@ -93,31 +97,33 @@ export default function Table() {
                 <input {...getInputProps()} />
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={files} strategy={verticalListSortingStrategy}>
-                        <table className="w-full table-auto border-collapse overflow-scroll">
-                            <thead>
-                                <tr className="bg-gray-700 text-white">
-                                    <th className="px-1">
-                                        {files.length > 0 && (
-                                            <input
-                                                type="checkbox"
-                                                className="accent-white"
-                                                onChange={handleCheckAll}
-                                                checked={files.every((file) => file.isSelected)}
-                                            />
-                                        )}
-                                    </th>
-                                    <th className="px-1">File Name</th>
-                                    <th className="px-1">Pages</th>
-                                    <th className="px-1">Size</th>
-                                    <th className="px-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {files.map((file) => (
-                                    <TableRow key={file.id} file={file} />
-                                ))}
-                            </tbody>
-                        </table>
+                        <div className="">
+                            <table className="w-full table-auto border-collapse">
+                                <thead>
+                                    <tr className="bg-gray-700 text-white">
+                                        <th className="w-12 px-1 text-center">
+                                            {files.length > 0 && (
+                                                <input
+                                                    type="checkbox"
+                                                    className="accent-white"
+                                                    onChange={handleCheckAll}
+                                                    checked={files.every((file) => file.isSelected)}
+                                                />
+                                            )}
+                                        </th>
+                                        <th className="px-1">File Name</th>
+                                        <th className="px-1">Pages</th>
+                                        <th className="px-1">Size</th>
+                                        <th className="px-1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {files.map((file) => (
+                                        <TableRow key={file.id} file={file} />
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </SortableContext>
                 </DndContext>
                 {files.length === 0 && (

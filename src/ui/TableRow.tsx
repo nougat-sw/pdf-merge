@@ -50,7 +50,7 @@ export default function TableRow({ file }: { file: UIFile }) {
             <td className="px-1">{name}</td>
             <td className="px-1 text-center">{nbOfPages}</td>
             <td className="px-1 text-center">{size}</td>
-            <td className="px-1 text-center">
+            <td className="w-12 px-1 text-center">
                 <button className="cursor-pointer text-red-400" onClick={() => deleteById(file.id)}>
                     <FaTrash />
                 </button>

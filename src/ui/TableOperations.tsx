@@ -2,6 +2,7 @@ import useFiles from "../hooks/useFiles";
 import download from "../lib/download.ts";
 import ConfirmDialog from "./ConfirmDialog";
 import { useState } from "react";
+import merge from "../lib/merge.ts";
 
 export default function TableOperations({ openFileDialog }: { openFileDialog: () => void }) {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -14,8 +15,6 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
     const { deleteSelected, deleteAll, files } = useFiles();
 
     async function handleMerge() {
-        const { default: merge } = await import("../lib/merge.ts");
-
         const merged = await merge(files.map((file) => file.file));
 
         const url = URL.createObjectURL(

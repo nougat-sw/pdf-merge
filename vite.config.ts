@@ -9,8 +9,9 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 manualChunks: {
-                    "vendor-react": ["react", "react-dom"],
-                    "vendor-utils": ["pdf-lib", "react-dropzone"],
+                    react: ["react", "react-dom"],
+                    "pdf-lib": ["pdf-lib"],
+                    "react-dropzone": ["react-dropzone"],
                 },
             },
         },

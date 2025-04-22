@@ -1,5 +1,4 @@
 import useFiles from "../hooks/useFiles";
-import merge from "../lib/merge";
 import download from "../lib/download.ts";
 import ConfirmDialog from "./ConfirmDialog";
 import { useState } from "react";
@@ -15,6 +14,8 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
     const { deleteSelected, deleteAll, files } = useFiles();
 
     async function handleMerge() {
+        const { default: merge } = await import("../lib/merge.ts");
+
         const merged = await merge(files.map((file) => file.file));
 
         const url = URL.createObjectURL(

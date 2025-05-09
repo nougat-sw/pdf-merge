@@ -3,21 +3,27 @@ import type { UIFile } from "../types/UIFile";
 import { createContext, useState } from "react";
 import { PDFDocument } from "pdf-lib";
 import { nanoid } from "nanoid";
+import toast from "react-hot-toast";
+import isValidPdf from "../lib/isvalidPdf";
 
 const FileContext = createContext<FileContextType | null>(null);
 
 export default function FileContextProvider({ children }: { children: React.ReactNode }) {
     const [files, setFiles] = useState<Array<UIFile>>([]);
 
-    function addFiles(files: Array<File>) {
+    async function addFiles(files: Array<File>) {
         const filesToAdd: UIFile[] = [];
 
         for (const file of files) {
-            filesToAdd.push({
-                file,
-                id: nanoid(10),
-                isSelected: false,
-            });
+            if (await isValidPdf(file)) {
+                filesToAdd.push({
+                    file,
+                    id: nanoid(10),
+                    isSelected: false,
+                });
+            } else {
+                toast.error("Skipped invalid file: " + file.name);
+            }
         }
 
         setFiles((files) => [...files, ...filesToAdd]);

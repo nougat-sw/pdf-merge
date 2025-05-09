@@ -3,6 +3,7 @@ import download from "../lib/download.ts";
 import ConfirmDialog from "./ConfirmDialog";
 import { useState } from "react";
 import merge from "../lib/merge.ts";
+import toast from "react-hot-toast";
 
 export default function TableOperations({ openFileDialog }: { openFileDialog: () => void }) {
     const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -15,17 +16,22 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
     const { deleteSelected, deleteAll, files } = useFiles();
 
     async function handleMerge() {
-        const merged = await merge(files.map((file) => file.file));
+        console.log("handleMerge");
+        try {
+            const merged = await merge(files.map((file) => file.file));
 
-        const url = URL.createObjectURL(
-            new Blob([merged], {
-                type: "application/pdf",
-            }),
-        );
+            const url = URL.createObjectURL(
+                new Blob([merged], {
+                    type: "application/pdf",
+                }),
+            );
 
-        download(url);
+            download(url);
 
-        URL.revokeObjectURL(url);
+            URL.revokeObjectURL(url);
+        } catch {
+            toast.error("Could not merge files.");
+        }
     }
 
     function showDialog(title: string, message: string, onConfirm: () => void, onClose: () => void) {
@@ -86,7 +92,7 @@ export default function TableOperations({ openFileDialog }: { openFileDialog: ()
                 <button
                     disabled={files.length < 2}
                     onClick={handleMerge}
-                    className="cursor-pointer rounded-md border border-gray-700 bg-gray-700 px-3 text-white ring-gray-700 ring-offset-2 ring-offset-gray-200 focus:ring-2 focus:outline-none active:ring disabled:cursor-default"
+                    className="cursor-pointer rounded-md border border-gray-700 bg-gray-700 px-3 text-white ring-gray-700 ring-offset-2 ring-offset-gray-200 focus:ring-2 focus:outline-none enabled:active:ring disabled:cursor-default disabled:bg-gray-300 disabled:text-gray-700"
                 >
                     Merge
                 </button>

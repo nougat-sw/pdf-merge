@@ -47,7 +47,7 @@ export default function TableRow({ file }: { file: UIFile }) {
                     onChange={() => toggleIsSelected(file.id)}
                 />
             </td>
-            <td className="px-1">{name}</td>
+            <td className="max-w-3 overflow-hidden px-1 sm:max-w-none">{name}</td>
             <td className="px-1 text-center">{nbOfPages}</td>
             <td className="px-1 text-center">{size}</td>
             <td className="w-12 px-1 text-center">

@@ -97,7 +97,7 @@ export default function Table() {
                 <input {...getInputProps()} />
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={files} strategy={verticalListSortingStrategy}>
-                        <div className="">
+                        <div>
                             <table className="w-full table-auto border-collapse">
                                 <thead>
                                     <tr className="bg-gray-700 text-white">
@@ -111,7 +111,7 @@ export default function Table() {
                                                 />
                                             )}
                                         </th>
-                                        <th className="px-1">File Name</th>
+                                        <th className="px-1">Name</th>
                                         <th className="px-1">Pages</th>
                                         <th className="px-1">Size</th>
                                         <th className="px-1"></th>
